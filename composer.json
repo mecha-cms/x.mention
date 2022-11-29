@@ -1,0 +1,8 @@
+{
+  "description": "Mention users in page content by its user name.",
+  "license": "GPL-3.0-or-later",
+  "name": "mecha-cms/x.mention",
+  "require": {
+    "mecha-cms/x.user": "^2.0.0"
+  }
+}
