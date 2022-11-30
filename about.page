@@ -10,10 +10,42 @@ use:
   '.\lot\x\user': 1
 ...
 
-Type a `@` character in the page content followed by an user name to automatically turn it into a user link. The link
-text can be set whether you want it to be displayed as the initial text, or you want it to be changed into user’s
-display name.
+Type an `@` character in the page content followed by a user name to turn it into a user link automatically. The link
+text can be set based on the `key` value in `.\lot\x\mention\state.php` file:
 
-Any mention pattern found in the HTML opening tag (as a tag name, attribute name or value) will be ignored. Any mention
-pattern found in the HTML content of `<code>`, `<kbd>`, `<pre>`, `<script>`, `<style>` and `<textarea>` will also be
-ignored.
+Key | Result
+--- | ------
+`author` | Link text will be the `author` property of `User` class instance. When you hover over it, the user key (the `user` property) will appear in the tooltip.
+`user` | Link text will be the `user` property of `User` class instance. When you hover over it, the display name (the `author` property) will appear in the tooltip.
+`*` | Where `*` is any string, link text will be the `*` property of `User` class instance.
+
+If the `key` value is a callable function name or an anonymous function, the value returned from it will be used to
+replace the mention pattern:
+
+~~~ .php
+<?php
+
+return [
+    'key' => function ($text) {
+        // In this context, `$this` refers to the `User` class instance
+        return '<a href="' . $this->url . '">' . $text . '</a>';
+    }
+];
+~~~
+
+If you want to set its value as a function name, make sure that it cannot possibly exist as a property name of a `User`
+class instance to prevent it from triggering a property call. You can ensure it in various ways, for example by creating
+a long and unique function name, or by creating a function name under a _namespace_. As long as a function name contains
+a `\` character, then there will be very less chance of it being detected as a property name.
+
+~~~ .php
+function name(string $text): string {
+    return '<mark>' . $text . '</mark>';
+}
+
+// This will most likely return the `$user->name` value, not the return value of function `name()`
+return ['key' => 'name'];
+~~~
+
+Any mention pattern found in the HTML tag (as a tag name, attribute name or value) will be ignored. Any mention pattern
+found in the HTML content of `<code>`, `<kbd>`, `<pre>`, `<script>`, `<style>` and `<textarea>` will also be ignored.
