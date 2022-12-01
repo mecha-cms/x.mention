@@ -10,7 +10,7 @@ use:
   '.\lot\x\user': 1
 ...
 
-Type an `@` character in the page content followed by a user name to turn it into a user link automatically. The link
+Type a `@` character in the page content followed by a user name to turn it into a user link automatically. The link
 text can be set based on the `key` value in `.\lot\x\mention\state.php` file:
 
 Key | Result

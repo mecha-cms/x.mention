@@ -1,1 +1,3 @@
-<?php return ['key' => 'user'];
+<?php
+
+return ['key' => 'user'];
