@@ -29,7 +29,7 @@ replace the mention pattern:
 return [
     'key' => function ($text) {
         // In this context, `$this` refers to the `User` class instance
-        return '<a href="' . $this->url . '">' . $text . '</a>';
+        return '<a href="' . ($this->link ?: $this->url) . '">' . $text . '</a>';
     }
 ];
 ~~~
