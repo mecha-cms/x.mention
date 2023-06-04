@@ -54,7 +54,7 @@ function page__content($content) {
     return $out;
 }
 
-function description($description) {
+function page__description($description) {
     return \fire(__NAMESPACE__ . "\\page__content", [$description], $this);
 }
 
